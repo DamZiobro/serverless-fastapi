@@ -17,11 +17,15 @@ serverless:
 	npm install -g serverless@2.66.1 || true
 	sls plugin install -n serverless-python-requirements
 	sls plugin install -n serverless-domain-manager
-	pip install poetry
+	pip install pyenv
 	touch $@
 
 
 requirements: serverless
+	pyenv install -s 3.8-dev
+	pyenv local 3.8-dev  # create virtualenv for poetry
+	pip install poetry
+	poetry env info
 	poetry install
 	touch $@
 
