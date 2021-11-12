@@ -1,10 +1,10 @@
-Serverless, DevOps, Microservices and AWS-based app with CI/CD pipeline
+Serverless FastAPI-based API
 ==================
 
 **CI/CD status**:
 ![CI/CD](https://github.com/DamZiobro/serverless-aws-lambda-sqs-app/workflows/CI/CD/badge.svg)
 
-This simple project is demonstration of multiple modern technologies/methodologies/principles:
+This simple RESTful API project based on FastAPI is demonstration of multiple modern technologies/methodologies/principles:
 
   * **Python** programming language
   * cloud-based app deployed to **Amazon Web Services (AWS)**
@@ -192,12 +192,3 @@ If something is not green, you should fix it before asking Code Review.
 
 When you Code is reviewed you can click 'Merge pull request' and merge it into
 `develop` branch.
-
-Monitoring
---------
-This application has integrated basic monitoring based on **CloudWatch Dashboards**. 
-It is based on [serverless-plugin-cloudwatch-dashboard](https://www.serverless.com/plugins/serverless-plugin-cloudwatch-dashboard/) Serverless framework plugin.
-
-Deployment of [serverless.yml](serverless.yml) creates 4 CloudWatch Dashboardss for AWS
-Lambda monitoring as on the picture:
-![](docs/dashboards.png)
