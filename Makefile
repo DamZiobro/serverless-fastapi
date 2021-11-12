@@ -26,10 +26,10 @@ requirements: serverless
 	touch $@
 
 unittest: requirements
-	poetry run pytest -s -vv
+	poetry run pytest -s -vv $(TEST_FILE)
 
 cov: requirements
-	poetry run pytest --cov=${APP_DIR}
+	poetry run pytest -s -vv --cov=${APP_DIR} $(TEST_FILE)
 
 cov-html:
 	poetry run coverage html
