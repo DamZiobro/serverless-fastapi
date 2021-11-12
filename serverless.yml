@@ -1,4 +1,4 @@
-service: myapp
+service: serverless-fastapi
 
 plugins:
   - serverless-python-requirements
@@ -12,6 +12,11 @@ provider:
 
 package:
     exclude:
+        - Makefile
+        - poetry.lock
+        - README.md
+        - tests/**
+        - docs/**
         - node_modules/**
         - .virtualenv/**
         - .serverless/**
@@ -29,7 +34,7 @@ custom:
 
 functions:
   api:
-    handler: main.handler
+    handler: api.main.handler
     environment:
       STAGE: ${self:provider.stage}
     layers:
