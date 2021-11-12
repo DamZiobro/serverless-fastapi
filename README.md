@@ -2,7 +2,7 @@ Serverless FastAPI-based API
 ==================
 
 **CI/CD status**:
-![CI/CD](https://github.com/DamZiobro/serverless-aws-lambda-sqs-app/workflows/CI/CD/badge.svg)
+![CI/CD](https://github.com/DamZiobro/serverless-fastapi/workflows/CI/CD/badge.svg)
 
 This simple RESTful API project based on FastAPI is demonstration of multiple modern technologies/methodologies/principles:
 
