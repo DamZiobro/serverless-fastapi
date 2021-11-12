@@ -35,7 +35,7 @@ cov-html:
 	poetry run coverage html
 
 format: requirements
-	poetry run isort $(APP_DIR) $(TEST_DIR)
+	poetry run isort $(APP_DIR)/**.py $(TEST_DIR)/**.py
 	poetry run black $(APP_DIR) $(TEST_DIR)
 
 lint: requirements
