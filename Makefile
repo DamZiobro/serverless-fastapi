@@ -15,8 +15,9 @@ AWS_DEFAULT_REGION ?= eu-west-1
 serverless:
 	#install serverless framework for Continous Deployment
 	npm install -g serverless@2.66.1 || true
-	sls plugin install -n serverless-plugin-cloudwatch-dashboard
 	sls plugin install -n serverless-python-requirements
+	sls plugin install -n serverless-domain-manager
+	pip install poetry
 	touch $@
 
 

@@ -9,7 +9,7 @@ python = "^3.8"
 boto3 = "1.13.5"
 fastapi = "0.63.0"
 uvicorn = "0.13.4"
-magnum = "^13.0.0"
+mangum = "0.11.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

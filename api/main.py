@@ -2,7 +2,7 @@
 import os
 
 from fastapi import FastAPI
-from magnum import Magnum
+from mangum import Mangum
 
 
 stage = os.environ.get('STAGE', None)
@@ -17,4 +17,4 @@ def hello():
     return {"message": "Hello World"}
 
 
-handler = Magnum(app)  # handler for deploy FastAPI to lambdas
+handler = Mangum(app)  # handler for deploy FastAPI to lambdas
