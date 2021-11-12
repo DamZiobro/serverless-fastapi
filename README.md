@@ -28,11 +28,6 @@ This simple RESTful API project based on FastAPI is demonstration of multiple mo
   * **Monitoring**
     * basic monitoring based on **CloudWatch Dashboards**
 
-This is the skeleton of framework which allows to build and deploy serverless
-apps using chain of `AWS Lambda => SQS => AWS Lambda => ...` pattern. 
-
-![](https://epsagon.com/wp-content/uploads/2018/11/ezgif-2-e456cb3ebd60.jpg)
-
 This framework is based on [a Serverless Application Framework](https://www.serverless.com/)
 
 Quick start
