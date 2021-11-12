@@ -1,0 +1,74 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI/CD
+
+# Controls when the action will run. Triggers the workflow on push or pull request 
+# events but only for the master branch
+on:
+  push:
+    branches: 
+        - develop
+        - 'release/*'
+    tags: 
+        - prd-v*
+  pull_request:
+    branches: 
+        - develop
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.7
+    
+    - name: Install NodeJS for serverless framework
+      uses: actions/setup-node@v1
+      with:
+        node-version: '14.x'
+
+    - name: Installing Serverless framework and plugins
+      run: make serverless
+
+    - name: Installing requirements
+      run: make requirements
+
+    - name: Static code analysis (sorting imports using isort)
+      run: make isort
+
+    - name: Static code analysis (check code formatting using black)
+      run: make black
+
+    - name: Static code analysis (pylint tool)
+      run: make lint
+
+    - name: Code security checkings (bandit tool)
+      run: make security
+
+    - name: Unit tests
+      run: make unittest
+
+    - name: Code coverage
+      run: make cov
+
+    - name: Serverless AWS authentication
+      run: sls config credentials --provider aws --key ${{ secrets.AWS_KEY }} --secret ${{ secrets.AWS_SECRET }}
+
+    - name: Deploy
+      run: make deploy
+
+    - name: End to End Tests
+      run: make e2e-tests
+
+    - name: Load tests
+      run: make load-tests
+
+    - name: Destroy
+      run: make destroy

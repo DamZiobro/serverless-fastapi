@@ -1,0 +1,40 @@
+service: myapp
+
+plugins:
+  - serverless-python-requirements
+  - serverless-plugin-cloudwatch-dashboard
+
+provider:
+  name: aws
+  runtime: python3.8
+  stage: ${opt:stage, "dev"}
+  region: eu-west-1
+
+package:
+    exclude:
+        - node_modules/**
+        - .virtualenv/**
+        - .serverless/**
+        - package.json
+        - package-lock.json
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
+    layer:
+      name: my-awesome-app-layer
+      description: My awesome app layer
+      compatibleRuntimes:
+        - python3.8
+
+functions:
+  api:
+    handler: main.handler
+    environment:
+      STAGE: ${self:provider.stage}
+    layers:
+      - { Ref: PythonRequirementsLambdaLayer }
+    events:
+      - http:
+          method: any
+          path: /{proxy+}
