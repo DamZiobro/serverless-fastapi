@@ -2,7 +2,7 @@ service: serverless-fastapi
 
 plugins:
   - serverless-python-requirements
-  - serverless-domain-manager
+  #- serverless-domain-manager
 
 provider:
   name: aws
