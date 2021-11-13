@@ -15,26 +15,29 @@ AWS_DEFAULT_REGION ?= eu-west-1
 serverless:
 	#install serverless framework for Continous Deployment
 	npm install -g serverless@2.66.1 || true
-	sls plugin install -n serverless-plugin-cloudwatch-dashboard
 	sls plugin install -n serverless-python-requirements
+	#sls plugin install -n serverless-domain-manager
 	touch $@
 
 
 requirements: serverless
+	pip install poetry
+	poetry env list
+	poetry env info
 	poetry install
 	touch $@
 
 unittest: requirements
-	poetry run pytest -s -vv
+	poetry run pytest -s -vv $(TEST_FILE)
 
 cov: requirements
-	poetry run pytest --cov=${APP_DIR}
+	poetry run pytest -s -vv --cov=${APP_DIR} $(TEST_FILE)
 
 cov-html:
 	poetry run coverage html
 
 format: requirements
-	poetry run isort $(APP_DIR) $(TEST_DIR)
+	poetry run isort $(APP_DIR)/**.py $(TEST_DIR)/**.py
 	poetry run black $(APP_DIR) $(TEST_DIR)
 
 lint: requirements
@@ -66,17 +69,11 @@ endif
 
 run: requirements
 	@echo "======> Running app on env $(ENV) <======"
-	sls invoke --stage $(ENV) -f lambda_function1
-
-sleep:
-	sleep 5
 
 logs: requirements
 	@echo "======> Getting logs from env $(ENV) <======"
-	sls logs --stage $(ENV) -f lambda_function1
-	sls logs --stage $(ENV) -f lambda_function2
 
-run-and-logs: run sleep logs
+run-and-logs: run logs
 
 e2e-tests: requirements run-and-logs
 
