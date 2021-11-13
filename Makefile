@@ -69,17 +69,11 @@ endif
 
 run: requirements
 	@echo "======> Running app on env $(ENV) <======"
-	sls invoke --stage $(ENV) -f lambda_function1
-
-sleep:
-	sleep 5
 
 logs: requirements
 	@echo "======> Getting logs from env $(ENV) <======"
-	sls logs --stage $(ENV) -f lambda_function1
-	sls logs --stage $(ENV) -f lambda_function2
 
-run-and-logs: run sleep logs
+run-and-logs: run logs
 
 e2e-tests: requirements run-and-logs
 
