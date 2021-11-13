@@ -22,6 +22,7 @@ serverless:
 
 requirements: serverless
 	pip install poetry
+	. `poetry env info --path`/bin/activate  # activate virtualenv
 	poetry env info
 	poetry install
 	touch $@
