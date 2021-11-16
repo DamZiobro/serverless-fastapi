@@ -16,7 +16,7 @@ serverless:
 	#install serverless framework for Continous Deployment
 	npm install -g serverless@2.66.1 || true
 	sls plugin install -n serverless-python-requirements
-	#sls plugin install -n serverless-domain-manager
+	sls plugin install -n serverless-domain-manager
 	touch $@
 
 
