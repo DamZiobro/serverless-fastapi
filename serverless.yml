@@ -34,7 +34,7 @@ custom:
   customDomain:
     domainName: xmementoit.co.uk
     stage: ${self:provider.stage}
-    certificateArn: arn:aws:acm:eu-west-1:398024481618:certificate/04175219-fa98-472f-8bd2-ef0198bb461c
+    certificateArn: arn:aws:acm:us-east-1:398024481618:certificate/0533876e-4bea-4013-83d5-bcf38e812c28
     endpointType: "edge"
     securityPolicy: tls_1_2
     apiType: rest
