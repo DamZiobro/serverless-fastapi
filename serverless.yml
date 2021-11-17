@@ -38,7 +38,7 @@ custom:
     endpointType: "edge"
     securityPolicy: tls_1_2
     apiType: rest
-    autoDomain: true
+    autoDomain: false
     autoDomainWaitFor: 120
 
 functions:
