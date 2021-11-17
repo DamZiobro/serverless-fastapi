@@ -17,3 +17,10 @@ def test_get_hello_returns_200():
     response = client.get("/hello")
     assert response.status_code == 200
     assert response.json() == {"message": "Hello World"}
+
+
+def test_root_hello_returns_200():
+    """GET / returns 200."""
+    response = client.get("/")
+    assert response.status_code == 200
+    assert response.json() == {"message": "API version: 0.1.0"}

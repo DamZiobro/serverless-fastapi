@@ -70,5 +70,5 @@ jobs:
     - name: Load tests
       run: make load-tests
 
-    - name: Destroy
-      run: make destroy
+    #- name: Destroy
+      #run: make destroy
