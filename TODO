@@ -1,3 +1,6 @@
+- add settings =>  https://fastapi.tiangolo.com/advanced/settings/
 - authentication
 - add more methods
 - link with databases (RDS, DynamoDB)
+- add e2e-tests
+- add load-tests

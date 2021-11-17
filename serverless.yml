@@ -2,8 +2,7 @@ service: serverless-fastapi
 
 plugins:
   - serverless-python-requirements
-  #- serverless-domain-manager
-
+  - serverless-domain-manager
 provider:
   name: aws
   runtime: python3.8
@@ -32,15 +31,16 @@ custom:
       compatibleRuntimes:
         - python3.8
 
-  #customDomain:
-    #domainName: xmementoit.co.uk
-    #stage: ${self:provider.stage}
-    #certificateArn: arn:aws:acm:eu-west-1:398024481618:certificate/25737166-a950-40b7-ab0f-ff8e93ebb5f7
-    #endpointType: "edge"
-    #securityPolicy: tls_1_2
-    #apiType: rest
-    #autoDomain: true
-    #autoDomainWaitFor: 120
+  customDomain:
+    domainName: api.xmementoit.co.uk
+    stage: ${self:provider.stage}
+    basePath: ${self:provider.stage}
+    certificateArn: arn:aws:acm:us-east-1:398024481618:certificate/94d0a821-cbd5-4ecb-aaa4-e63efe9d6424
+    endpointType: "edge"
+    securityPolicy: tls_1_2
+    apiType: rest
+    autoDomain: true
+    autoDomainWaitFor: 120
 
 functions:
   api:

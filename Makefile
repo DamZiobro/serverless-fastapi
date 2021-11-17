@@ -2,12 +2,15 @@
 # Makefile
 #
 
-#set default ENV based on your username and hostname
+#set default STAGE based on your username and hostname
 APP_DIR=api
 TEST_DIR=tests
 #get name of GIT branchse => remove 'feature/' if exists and limit to max 20 characters
 GIT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD | sed -r 's/[\/]+/-/g' | sed -r 's/feature-//g' | cut -c 1-20)
-ENV ?= $(GIT_BRANCH)
+GIT_TAG=$(shell git tag --points-at HEAD | cut -c 1-3)
+
+STAGE ?= $(if $(GIT_TAG), $(GIT_TAG), $(GIT_BRANCH))
+
 AWS_DEFAULT_REGION ?= eu-west-1
 
 #==========================================================================
@@ -16,7 +19,7 @@ serverless:
 	#install serverless framework for Continous Deployment
 	npm install -g serverless@2.66.1 || true
 	sls plugin install -n serverless-python-requirements
-	#sls plugin install -n serverless-domain-manager
+	sls plugin install -n serverless-domain-manager
 	touch $@
 
 
@@ -28,10 +31,10 @@ requirements: serverless
 	touch $@
 
 unittest: requirements
-	poetry run pytest -s -vv $(TEST_FILE)
+	poetry run pytest -s -vv --ignore=node_modules $(TEST_FILE)
 
 cov: requirements
-	poetry run pytest -s -vv --cov=${APP_DIR} $(TEST_FILE)
+	poetry run pytest -s -vv --ignore=node_modules --cov=${APP_DIR} $(TEST_FILE)
 
 cov-html:
 	poetry run coverage html
@@ -57,21 +60,21 @@ security: requirements
 code-checks: isort black lint security
 
 build:
-	poetry run uvicorn api.main:app
+	poetry run uvicorn api.main:app --reload
 
 deploy:
-	@echo "======> Deploying to env $(ENV) <======"
+	@echo "======> Deploying to env $(STAGE) <======"
 ifeq ($(FUNC),)
-	sls deploy --stage $(ENV) --verbose --region $(AWS_DEFAULT_REGION)
+	sls deploy --stage $(STAGE) --verbose --region $(AWS_DEFAULT_REGION)
 else
-	sls deploy --stage $(ENV) -f $(FUNC) --verbose --region $(AWS_DEFAULT_REGION)
+	sls deploy --stage $(STAGE) -f $(FUNC) --verbose --region $(AWS_DEFAULT_REGION)
 endif
 
 run: requirements
-	@echo "======> Running app on env $(ENV) <======"
+	@echo "======> Running app on env $(STAGE) <======"
 
 logs: requirements
-	@echo "======> Getting logs from env $(ENV) <======"
+	@echo "======> Getting logs from env $(STAGE) <======"
 
 run-and-logs: run logs
 
@@ -81,8 +84,8 @@ load-tests: requirements
 	@echo -e "load-tests not implemented yet"
 
 destroy: requirements
-	@echo "======> DELETING in env $(ENV) <======"
-	sls remove --stage $(ENV) --verbose --region $(AWS_DEFAULT_REGION)
+	@echo "======> DELETING in env $(STAGE) <======"
+	sls remove --stage $(STAGE) --verbose --region $(AWS_DEFAULT_REGION)
 
 ci: code-checks unittest coverage
 cd: ci deploy e2e-tests load-tests
