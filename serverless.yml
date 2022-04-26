@@ -4,7 +4,6 @@ plugins:
   - serverless-python-requirements
   - serverless-domain-manager
   - serverless-localstack
-
 provider:
   name: aws
   runtime: python3.8
