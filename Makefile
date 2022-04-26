@@ -17,9 +17,10 @@ AWS_DEFAULT_REGION ?= eu-west-1
 # Test and verify quality of the app
 serverless:
 	#install serverless framework for Continous Deployment
-	npm install -g serverless@2.66.1 || true
+	npm install -g serverless@3.15.2 || true
 	sls plugin install -n serverless-python-requirements
 	sls plugin install -n serverless-domain-manager
+	sls plugin install -n serverless-localstack
 	touch $@
 
 
@@ -59,7 +60,7 @@ security: requirements
 
 code-checks: isort black lint security
 
-build:
+build: requirements
 	poetry run uvicorn api.main:app --reload
 
 deploy:
