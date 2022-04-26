@@ -7,6 +7,7 @@ Serverless FastAPI-based API
 This simple RESTful API project based on FastAPI is demonstration of multiple modern technologies/methodologies/principles:
 
   * **Python** programming language
+    * poetry for dependencies management
   * cloud-based app deployed to **Amazon Web Services (AWS)**
   * **Serverless** (Serverless Framework) - AWS Lambda, SQS
   * **Microservices** architecture (single resposiblity AWS Lambdas communicating via AWS SQS)
