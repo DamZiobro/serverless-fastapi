@@ -4,3 +4,5 @@
 - link with databases (RDS, DynamoDB)
 - add e2e-tests
 - add load-tests
+- add Event Sourcing
+- apply CQRS pattern
