@@ -56,7 +56,7 @@ make run
 sleep 20 #wait 20 seconds until logs stream is created in AWS
 make logs
 ```
-7. **Destroy app** - delete all AWS resources of your app
+7. **Destroy app** - delete all AWS resources of your app 
 ```
 make destroy
 ```
