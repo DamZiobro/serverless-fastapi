@@ -31,7 +31,6 @@ deps: serverless
 	pip install poetry
 	poetry env list
 	poetry env info
-	poetry config virtualenvs.in-project true
 	poetry install
 	touch $@
 
