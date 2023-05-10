@@ -7,6 +7,7 @@ This simple RESTful API project based on FastAPI is demonstration of multiple mo
 
   * **Python** programming language
     * RestAPI using **FastAPI**
+    * API designed using [Clean Architecture](https://www.freecodecamp.org/news/a-quick-introduction-to-clean-architecture-990c014448d2/) with help of [Repository Pattern](https://hackernoon.com/adopting-the-repository-pattern-for-enhanced-backend-development-with-fastapi)
     * [**poetry**](https://python-poetry.org/) for dependencies management
     * code checks using: **[flake8](https://flake8.pycqa.org/en/latest/), [black](https://pypi.org/project/black/), [isort](https://pycqa.github.io/isort/)**
     * unit tests using [**pytest**](https://docs.pytest.org/en/7.3.x/) and [hypothesis](https://hypothesis.readthedocs.io/en/latest/details.html)
