@@ -1,0 +1,34 @@
+[flake8]
+max-line-length=100
+exclude = .git,__pycache__,
+ignore=
+    # W504 is nice to have, but would require a lot of changes for now.
+    W504,
+    # The following items cause flake8 to get cross in the presence of
+    # black.
+    W503,
+    E203,
+
+    # The following are Docstring errors. We leave only the requirement for
+    # docstrings to exist, rather than anything more finicky, because right now
+    # we need the documentation but needn't get too hung up on the details.
+    D106,
+    D200,
+    D202,
+    D203, # Even if we turn docstring errors back on, this can stay off, because it's daft.
+    D205,
+    D209,
+    D212,
+    D213,
+    D400,
+    D401,
+    D415
+inline-quotes = "
+multiline-quotes= """
+docstring-convention=all
+# Ignore docstring requirements for test files
+per-file-ignores=
+    test_*.py:D,
+    alembic/*:D
+    src/cotrack_server/migrations/versions/*py:D
+    src/collector/alembic/versions/*py:D
