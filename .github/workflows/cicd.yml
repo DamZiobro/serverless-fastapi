@@ -67,8 +67,8 @@ jobs:
     - name: End to End Tests
       run: make e2e-tests
 
-    - name: Load tests
-      run: make load-tests
+    #- name: Load tests
+      #run: make load-tests
 
     #- name: Destroy
       #run: make destroy

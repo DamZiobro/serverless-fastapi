@@ -20,10 +20,12 @@ package:
         - tests/**
         - docs/**
         - node_modules/**
-        - .virtualenv/**
+        - .venv/**
         - .serverless/**
         - package.json
         - package-lock.json
+        - .pytest_cache
+        - .hypothesis
 
 custom:
   pythonRequirements:

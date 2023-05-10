@@ -1,5 +1,4 @@
-Serverless FastAPI-based API
-==================
+## Serverless FastAPI-based API
 
 **CI/CD status**:
 ![CI/CD](https://github.com/DamZiobro/serverless-fastapi/workflows/CI/CD/badge.svg)
@@ -7,58 +6,61 @@ Serverless FastAPI-based API
 This simple RESTful API project based on FastAPI is demonstration of multiple modern technologies/methodologies/principles:
 
   * **Python** programming language
-    * poetry for dependencies management
+    * RestAPI using **FastAPI**
+    * [**poetry**](https://python-poetry.org/) for dependencies management
+    * code checks using: **[flake8](https://flake8.pycqa.org/en/latest/), [black](https://pypi.org/project/black/), [isort](https://pycqa.github.io/isort/)**
+    * unit tests using [**pytest**](https://docs.pytest.org/en/7.3.x/) and [hypothesis](https://hypothesis.readthedocs.io/en/latest/details.html)
+    * code coverage using [**pytest-cov**](https://pypi.org/project/pytest-cov/)
+    * load tests using [**locust**](https://locust.io/)
+    * schema tests (contract tests) using [**schemathesis**](https://github.com/schemathesis/schemathesis)
   * cloud-based app deployed to **Amazon Web Services (AWS)**
-  * **Serverless** (Serverless Framework) - AWS Lambda, SQS
-  * **Microservices** architecture (single resposiblity AWS Lambdas communicating via AWS SQS)
-  * **Infrastracture as a Code** (IaaC) (Serverless framework - [serverless.yml](serverless.yml) defines infrastructure resources)
-  * **DevOps**-based workflow (common code base with Makefile commands spanning Developers and Operations Teams together)
+  * **Serverless** (Serverless Framework) - AWS Lambda, API Gateway
+  * **Microservices / serverless** architecture (AWS Lambdas creating REST API)
+  * **Infrastracture as a Code** (IaaC) ([**Serverless framework**](https://www.serverless.com/framework/docs/getting-started) - [serverless.yml](serverless.yml) defines infrastructure resources)
+  * **DevOps**-based workflow (common code base with [Makefile](Makefile) commands spanning Developers and Operations Teams together - used in CI/CD)
   * **CI/CD** pipeline
-    * code syntax verification (pylint, isort, black) (`make lint`)
+    * code syntax verification (flake8, isort, black) (`make lint`)
     * security verification (bandit) (`make security`)
-    * unit tests (unittest) (`make unittest`)
+    * unit tests (pytest) (`make unittest`)
     * code coverage (coverage python module)  (`make cov`)
     * deploy infrastructure (AWS, Serverless framework)  (`make deploy`)
-    * End-To-End tests (cucumber, pytest-bdd, selenium) (NOT IMPLEMENTED YET) (`make e2e-tests`)
-    * load/performance tests (gatling, locust) (NOT IMPLEMENTED YET) (`make load-tests`)
+    * End-To-End tests (behave, selenium, pytest-bdd) (NOT IMPLEMENTED YET) (`make e2e-tests`)
+    * load/performance tests (locust) (`make load-tests`)
     * destroy infrastructure (AWS, Serverless framework)  (`make destroy`)
+    * CI/CD deployment configured using [**Git Flow**](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) principles
   * **deploying from Command Line or from CI/CD** 
     * single Makefile to control all deployment and code checkings commands
     * available to **deploy to multiple stages /environments (ex. DEV, SIT, PROD)** using the same command (ex. `make deploy ENV=SIT`)
-    * available to deploy single lambda function (ex. `make deploy FUNC=lambdaFunctionName`)
   * **Monitoring**
     * basic monitoring based on **CloudWatch Dashboards**
+    * getting logs from **AWS CloudWatch**
 
-This framework is based on [a Serverless Application Framework](https://www.serverless.com/)
+This app template is based on [a Serverless Application Framework](https://www.serverless.com/)
 
-Quick start
-----
+
+
+### Quick start
+
+#### Run locally
+
+1. Install dependencies:
+```
+make deps
+```
+2. Run API locally:
+```
+make run
+```
+3. Check API is up and running by opening it's root URL [http://localhost:8000](http://localhost:8000) in your web browser.
+4. Check [OpenAPI](https://swagger.io/specification/) docs is up and running by opening it's URL [http://localhost:8000/docs](http://localhost:8000/docs) in your web browser.
+
+#### Deploy to AWS using Serverless Framework
+
 1. [**Set up AWS credentials**](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) for your terminal
 2. **Install Serverless Application Framework** via npm - [Instruction](https://www.serverless.com/framework/docs/getting-started#via-npm). You can use `make serverless` command from root directory of this project (or `sudo make serverless` if you see `EACCES: permission denied`).
 3. **Deploy default app**
 ```
 make deploy
-```
-4. **Run app and get logs** (logs should contain: `Received message: test_message`)
-```
-make run
-sleep 20 #wait 20 seconds until logs stream is created in AWS
-make logs
-```
-5. **Do changes** in your lambda function **and redeploy** only lambda_function1 function:
-```
-sed -i 's/test_message/NEW_TEST_MESSAGE/g' app/lambda_function1.py
-make deploy FUNC=lambda_function2
-```
-6. **Run app again and verify that logs** contains your changes (logs should contain: `Received message: NEW_TEST_MESSAGE`):
-```
-make run
-sleep 20 #wait 20 seconds until logs stream is created in AWS
-make logs
-```
-7. **Destroy app** - delete all AWS resources of your app
-```
-make destroy
 ```
 
 Stages
@@ -87,28 +89,14 @@ By default resources are deployed to the default
 (environment) based on current branch name ex. `master`. Thanks to that multiple users working on separate branches can deploy to
 separate AWS resources to avoid resources conflicts.
 
-After triggering the above command on `master` branch following resources will be created in your
-AWS account:
- - AWS Lambda: `myapp-master-lambda_function2`
- - AWS Lambda: `myapp-master-lambda_function1`
- - AWS SQS queue: `myapp-master-sqs-lambda_function1`
-
-
-The resources for different stages will be deployed with different names to be
-possible to test different versions of app separately. 
-For example, if you trigger `make deploy ENV=dev` following resources will be
-deployed:
- - `myapp-dev-lambda_function1`
- - `myapp-dev-lambda_function2`
- - `myapp-dev-sqs-lambda_function1`
-
 Tests
 ----
 We have following level of tests in the application:
-- `make code-checks` - checks code syntax using `pylint` and security using `bandit` 
+- `make code-checks` - checks code syntax using `flake8`, `black`, `isort` and security using `bandit` 
 - `make unittest cov` - trigger all unit tests of the code and show code coverage
-- `make e2e-tests` (NOT IMPLEMETED YET) - selenium-based tests runned after deployment
-- `make load-tests` (NOT IMPLEMENTED YET) 
+- `make e2e-tests` (NOT IMPLEMETED YET) - behave-based tests runned after deployment
+- `make schema-tests` - schemathesis-based API schema tests (contract tests)
+- `make load-tests` - locust-based load tests
 
 CI/CD
 ----
@@ -132,7 +120,7 @@ You can run all the below steps/commands using one `make cd` command:
 - `make deploy` => deploys app to AWS
 - `make e2e-tests` => run End to End tests on deployed app
 - `make load-tests` => run Load tests on deployed app
-- `make destroy` => (optional: works only on feature branches) destroy AWS
+- `make destroy` => (optional: works only on GitFlow feature branches) destroy AWS
   resources after finishing e2e-tests
 
 
@@ -167,7 +155,7 @@ We can automatically reformat the code according to black and isort rules:
 make format
 ```
 
-Creating and Merging Pull Requests
+Creating and Merging Pull Requests according to GitFlow
 --------
 
 To create Pull Request, go to [Pull Requests](https://github.com/DamZiobro/serverless-aws-lambda-sqs-app/pulls) and
