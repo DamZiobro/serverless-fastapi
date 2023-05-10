@@ -28,17 +28,18 @@ serverless:
 
 
 deps: serverless
-	pip install poetry
+	@poetry --version &> /dev/null || (echo -e "ERROR: please install poetry" && false)
+	poetry config virtualenvs.in-project true
 	poetry env list
 	poetry env info
 	poetry install
 	touch $@
 
 unittest: deps
-	poetry run pytest -s -vv --ignore=node_modules $(TEST_FILE)
+	poetry run pytest -s -vv --ignore=node_modules . $(TEST_FILE)
 
 cov: deps
-	poetry run pytest -s -vv --ignore=node_modules --cov=${APP_DIR} $(TEST_FILE)
+	poetry run pytest -s -vv --ignore=node_modules . --cov=${APP_DIR} $(TEST_FILE)
 
 cov-html:
 	poetry run coverage html
@@ -94,6 +95,6 @@ ci: code-checks unittest coverage
 cd: ci deploy e2e-tests load-tests
 
 clean:
-	rm -rf .venv .coverage .serverless .pytest_cache serverless deps node_modules htmlcov __pycache__ .ruff_cache
+	rm -rf .venv .coverage .serverless .pytest_cache serverless deps node_modules htmlcov __pycache__ .ruff_cache .hypothesis
 
 .PHONY: e2e-test deploy destroy unittest coverage lint security code-checks run logs destroy

@@ -36,6 +36,10 @@ jobs:
 
     - name: Install and configure Poetry
       uses: snok/install-poetry@v1
+      with:
+        version: 1.3.2
+        virtualenvs-create: true
+        virtualenvs-in-project: true
 
     - name: Installing Serverless framework and plugins
       run: make serverless
