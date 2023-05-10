@@ -37,8 +37,8 @@ jobs:
     - name: Installing Serverless framework and plugins
       run: make serverless
 
-    - name: Installing requirements
-      run: make requirements
+    - name: Installing dependencies
+      run: make deps
 
     - name: Static code analysis (sorting imports using isort)
       run: make isort
@@ -46,7 +46,7 @@ jobs:
     - name: Static code analysis (check code formatting using black)
       run: make black
 
-    - name: Static code analysis (pylint tool)
+    - name: Static code analysis (flake8 tool)
       run: make lint
 
     - name: Code security checkings (bandit tool)
