@@ -28,7 +28,7 @@ serverless:
 
 
 deps: serverless
-	@poetry --version &> /dev/null || (echo -e "ERROR: please install poetry" && false)
+	pip install poetry
 	poetry env list
 	poetry env info
 	poetry config virtualenvs.in-project true
