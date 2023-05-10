@@ -21,6 +21,7 @@ httpx = "^0.24.0"
 locust = "^2.15.1"
 hypothesis = "^6.74.0"
 schemathesis = "^3.19.1"
+bandit = "^1.7.5"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
