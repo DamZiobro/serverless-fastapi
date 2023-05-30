@@ -84,8 +84,11 @@ e2e-tests: deps
 load-tests: deps ## run load tests using locust tool (make run should be run in another terminal before)
 	poetry run locust --headless -f tests/load/locustfile.py -H $(API_BASE_URL) --users 100 --spawn-rate 100 --run-time 30s
 
-schema-tests: deps ## run API contract tests based on schemathesis tool (make run should be run in another terminal before)
+schema-tests: deps ## run API schema tests based on schemathesis tool (make run should be run in another terminal before)
 	poetry run st run --checks all $(API_BASE_URL)/openapi.json
+
+contract-tests: deps ## run API contract tests using pact tool (make run should be run in another termina before)
+	poetry run python tests/contract/todo-api-contract.py
 
 destroy: deps
 	@echo "======> DELETING in env $(STAGE) <======"

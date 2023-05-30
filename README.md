@@ -6,14 +6,16 @@
 This simple RESTful API project based on FastAPI is demonstration of multiple modern technologies/methodologies/principles:
 
   * **Python** programming language
-    * RestAPI using [**FastAPI**](https://fastapi.tiangolo.com/lo/)
+    * RESTful API using [**FastAPI**](https://fastapi.tiangolo.com/lo/) framework
+    * input data validation using [**pydantic**](https://docs.pydantic.dev/latest/) library
     * API designed using [Clean Architecture](https://www.freecodecamp.org/news/a-quick-introduction-to-clean-architecture-990c014448d2/) with help of [Repository Pattern](https://hackernoon.com/adopting-the-repository-pattern-for-enhanced-backend-development-with-fastapi)
     * [**poetry**](https://python-poetry.org/) for dependencies management
     * code checks using: **[flake8](https://flake8.pycqa.org/en/latest/), [black](https://pypi.org/project/black/), [isort](https://pycqa.github.io/isort/)**
     * unit tests using [**pytest**](https://docs.pytest.org/en/7.3.x/) and [hypothesis](https://hypothesis.readthedocs.io/en/latest/details.html)
     * code coverage using [**pytest-cov**](https://pypi.org/project/pytest-cov/)
     * load tests using [**locust**](https://locust.io/)
-    * schema tests (contract tests) using [**schemathesis**](https://github.com/schemathesis/schemathesis)
+    * schema tests using [**schemathesis**](https://github.com/schemathesis/schemathesis)
+    * contract tests using [**pact-python**](https://github.com/pact-foundation/pact-python)
   * cloud-based app deployed to **Amazon Web Services (AWS)**
   * **Serverless** (Serverless Framework) - AWS Lambda, API Gateway
   * **Microservices / serverless** architecture (AWS Lambdas creating REST API)
@@ -96,7 +98,8 @@ We have following level of tests in the application:
 - `make code-checks` - checks code syntax using `flake8`, `black`, `isort` and security using `bandit` 
 - `make unittest cov` - trigger all unit tests of the code and show code coverage
 - `make e2e-tests` (NOT IMPLEMETED YET) - behave-based tests runned after deployment
-- `make schema-tests` - schemathesis-based API schema tests (contract tests)
+- `make schema-tests` - schemathesis-based API schema tests
+- `make contract-tests` - pact-based API contract tests
 - `make load-tests` - locust-based load tests
 
 CI/CD
