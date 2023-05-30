@@ -1,6 +1,5 @@
 import unittest
 from pact import Consumer, Provider
-from urllib.parse import quote
 
 # Define the consumer and provider names
 consumer = Consumer("TodoAppConsumer")
