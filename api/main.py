@@ -1,4 +1,4 @@
-"""Implementation of Use Cases based on the Clean Architecture principles"""
+"""Entry point of FastAPI app."""
 
 import time
 
@@ -13,7 +13,7 @@ from api.routes.todo import router as todo_router
 
 
 app = FastAPI(
-    title="fastapi-react-serverless",
+    title="fastapi-serverless",
     version=__version__,
     openapi_url="/openapi.json",
     docs_url="/docs",
