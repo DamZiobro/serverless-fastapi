@@ -34,6 +34,7 @@ This simple RESTful API project based on FastAPI is demonstration of multiple mo
   * **deploying from Command Line or from CI/CD** 
     * single Makefile to control all deployment and code checkings commands
     * available to **deploy to multiple stages /environments (ex. DEV, SIT, PROD)** using the same command (ex. `make deploy ENV=SIT`)
+    * integrated with [**GitHub Actions CI/CD pipelines**](https://github.com/DamZiobro/serverless-fastapi/actions)
   * **Monitoring**
     * basic monitoring based on **CloudWatch Dashboards**
     * getting logs from **AWS CloudWatch**
